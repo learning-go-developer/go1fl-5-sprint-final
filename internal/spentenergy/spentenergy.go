@@ -20,8 +20,21 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 	// TODO: реализовать функцию
 }
 
+// MeanSpeed calculates the average speed in kilometers per hour
+// based on the number of steps, the person's height, and the duration.
+// If steps is zero or duration is non-positive, it returns 0.
+// The function uses Distance() to compute the traveled distance
+// and divides it by the duration in hours.
 func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
-	// TODO: реализовать функцию
+	if steps == 0 {
+		return 0
+	}
+	
+	if duration <= 0 {
+		return 0
+	}
+
+	return Distance(steps, height) / duration.Hours()
 }
 
 // Distance calculates the traveled distance in kilometers
