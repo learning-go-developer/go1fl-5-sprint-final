@@ -1,8 +1,9 @@
 package spentenergy
 
 import (
-	"time"
 	"errors"
+	"fmt"
+	"time"
 )
 
 // Основные константы, необходимые для расчетов.
@@ -76,6 +77,6 @@ func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
 func Distance(steps int, height float64) float64 {
 	stepLength := height * stepLengthCoefficient
 	distanceMeters := float64(steps) * stepLength
-	
+
 	return distanceMeters / mInKm
 }
