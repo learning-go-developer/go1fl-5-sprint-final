@@ -2,6 +2,7 @@ package spentenergy
 
 import (
 	"time"
+	"errors"
 )
 
 // Основные константы, необходимые для расчетов.
@@ -16,8 +17,21 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 	// TODO: реализовать функцию
 }
 
+// RunningSpentCalories calculates the estimated calories spent while running
+// based on the number of steps, the runner's weight and height, and the duration.
+// It returns an error if steps is zero or duration is non-positive.
+// The calculation uses MeanSpeed() to determine average speed and multiplies
+// it by the runner's weight and the duration in minutes, normalized by minInH.
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
+	if steps == 0 {
+		return 0, errors.New("steps must be greater than 0")
+	}
+
+	if duration <= 0 {
+		return 0, errors.New("duration must be positive")
+	}
+
+	return (weight * MeanSpeed(steps, height, duration) * duration.Minutes()) / minInH, nil
 }
 
 // MeanSpeed calculates the average speed in kilometers per hour
@@ -29,7 +43,7 @@ func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
 	if steps == 0 {
 		return 0
 	}
-	
+
 	if duration <= 0 {
 		return 0
 	}
