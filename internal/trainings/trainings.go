@@ -59,11 +59,27 @@ func (t *Training) Parse(datastring string) (err error) {
 	return nil
 }
 
+// ActionInfo generates and returns a formatted string with details about the training.
+// It uses the Training struct fields to calculate:
+//   - distance (via spentenergy.Distance),
+//   - average speed (via spentenergy.MeanSpeed),
+//   - calories burned (via RunningSpentCalories or WalkingSpentCalories).
+//
+// The returned string has the format:
+//
+//   Training type: Running
+//   Duration: 0.75 h.
+//   Distance: 10.00 km.
+//   Speed: 13.34 km/h
+//   Calories burned: 18621.75
+//
+// If the training type is unknown, the method returns an error
+// with the message "unknown training type". Errors are also returned
+// if calculations inside the spentenergy package fail.
 func (t Training) ActionInfo() (string, error) {
 	var calories float64
 	var err error
 
-	// TODO: реализовать функцию
 	if t.TrainingType == "Бег" {
 		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
 		if err != nil {
