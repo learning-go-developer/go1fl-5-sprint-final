@@ -13,8 +13,27 @@ const (
 	walkingCaloriesCoefficient = 0.5  // коэффициент для расчета калорий при ходьбе.
 )
 
+// WalkingSpentCalories calculates the estimated calories spent while walking
+// based on the number of steps, the user's weight and height, and the duration.
+// It returns an error if steps is zero or duration is non-positive.
+// Internally, it calls RunningSpentCalories() to compute the base calorie value,
+// then multiplies the result by walkingCaloriesCoefficient to apply the walking
+// correction factor.
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
+	if steps == 0 {
+		return 0, errors.New("steps must be greater than 0")
+	}
+
+	if duration <= 0 {
+		return 0, errors.New("duration must be positive")
+	}
+
+	calories, err := RunningSpentCalories(steps, weight, height, duration)
+	if err != nil {
+		return 0, fmt.Errorf("failed to calculate calories: %w", err)
+	}
+
+	return calories * walkingCaloriesCoefficient, nil
 }
 
 // RunningSpentCalories calculates the estimated calories spent while running
