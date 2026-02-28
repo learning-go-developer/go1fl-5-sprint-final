@@ -6,9 +6,9 @@ import "fmt"
 // It contains the Name, Weight, and Height fields.
 // Name is a string, Weight and Height are stored as float64 values.
 type Personal struct {
-	Name 	string 	// Person's name
-	Weight 	float64 // Person's weight in kilograms
-	Height 	float64 // Person's height in meters
+	Name   string  // Person's name
+	Weight float64 // Person's weight in kilograms
+	Height float64 // Person's height in meters
 }
 
 // Print outputs the Personal struct data to standard output.

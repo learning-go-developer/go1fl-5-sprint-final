@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
 // Training represents a workout session.
@@ -59,5 +60,36 @@ func (t *Training) Parse(datastring string) (err error) {
 }
 
 func (t Training) ActionInfo() (string, error) {
+	var calories float64
+	var err error
+
 	// TODO: реализовать функцию
+	if t.TrainingType == "Бег" {
+		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		if err != nil {
+			return "", fmt.Errorf("failed to call RunningSpentCalories: %w", err)
+		}
+	} else if t.TrainingType == "Ходьба" {
+		calories, err = spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
+		if err != nil {
+			return "", fmt.Errorf("failed to call WalkingSpentCalories: %w", err)
+		}
+	} else {
+		return "", errors.New("неизвестный тип тренировки")
+	}
+
+	data := fmt.Sprintf(
+		"Тип тренировки: %s\n"+
+			"Длительность: %.2f ч.\n"+
+			"Дистанция: %.2f км.\n"+
+			"Скорость: %.2f км/ч\n"+
+			"Сожгли калорий: %.2f\n",
+		t.TrainingType,
+		t.Duration.Hours(),
+		spentenergy.Distance(t.Steps, t.Height),
+		spentenergy.MeanSpeed(t.Steps, t.Height, t.Duration),
+		calories,
+	)
+
+	return data, nil
 }
