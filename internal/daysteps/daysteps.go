@@ -88,6 +88,18 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	var calories float64
 	var err error
 
+	if ds.Steps < 0 {
+		return "", fmt.Errorf("invalid steps: %d", ds.Steps)
+	}
+	
+	if ds.Weight <= 0 {
+		return "", fmt.Errorf("invalid weight: %.2f", ds.Weight)
+	}
+
+	if ds.Height <= 0 {
+		return "", fmt.Errorf("invalid height: %.2f", ds.Height)
+	}
+
 	calories, err = spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
 		return "", fmt.Errorf("failed to call WalkingSpentCalories: %w", err)
