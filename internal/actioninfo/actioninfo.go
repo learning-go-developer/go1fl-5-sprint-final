@@ -8,7 +8,7 @@ package actioninfo
 //   - ActionInfo(): to generate a formatted string with details
 //     about the activity (e.g., steps, distance, calories).
 type DataParser interface {
-	Parse() error
+	Parse(input string) error
 	ActionInfo() (string, error)
 }
 
