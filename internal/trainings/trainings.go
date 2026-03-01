@@ -42,19 +42,23 @@ func (t *Training) Parse(datastring string) (err error) {
 		return fmt.Errorf("failed to conveert steps: %w", err)
 	}
 
-	if steps == 0 {
-		return errors.New("steps must be greater than 0")
+	if steps <= 0 {
+		return errors.New("steps must be greater than zero")
 	}
 
 	t.Steps = steps
 	t.TrainingType = parts[1]
 
-	d, err := time.ParseDuration(parts[2])
+	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
 		return fmt.Errorf("failed to parse duration: %w", err)
 	}
 
-	t.Duration = d
+	if duration <= 0 {
+		return errors.New("duration must be positive")
+	}
+
+	t.Duration = duration
 
 	return nil
 }
@@ -67,11 +71,11 @@ func (t *Training) Parse(datastring string) (err error) {
 //
 // The returned string has the format:
 //
-//   Training type: Running
-//   Duration: 0.75 h.
-//   Distance: 10.00 km.
-//   Speed: 13.34 km/h
-//   Calories burned: 18621.75
+//	Training type: Running
+//	Duration: 0.75 h.
+//	Distance: 10.00 km.
+//	Speed: 13.34 km/h
+//	Calories burned: 18621.75
 //
 // If the training type is unknown, the method returns an error
 // with the message "unknown training type". Errors are also returned
