@@ -58,7 +58,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 
 	ds.Steps = steps
 
-	d, err := time.ParseDuration(parts[2])
+	d, err := time.ParseDuration(parts[1])
 	if err != nil {
 		return fmt.Errorf("failed to parse duration: %w", err)
 	}
@@ -91,7 +91,7 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	if ds.Steps < 0 {
 		return "", fmt.Errorf("invalid steps: %d", ds.Steps)
 	}
-	
+
 	if ds.Weight <= 0 {
 		return "", fmt.Errorf("invalid weight: %.2f", ds.Weight)
 	}
