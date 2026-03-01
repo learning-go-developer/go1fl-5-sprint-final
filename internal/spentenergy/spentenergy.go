@@ -21,12 +21,20 @@ const (
 // then multiplies the result by walkingCaloriesCoefficient to apply the walking
 // correction factor.
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps == 0 {
-		return 0, errors.New("steps must be greater than 0")
+	if steps <= 0 {
+		return 0, errors.New("invalid steps: must be positive")
 	}
 
-	if duration <= 0 {
-		return 0, errors.New("duration must be positive")
+	if weight <= 0 {
+		return 0, errors.New("invalid weight: must be positive")
+	}
+
+	if height <= 0 {
+		return 0, errors.New("invalid height: must be positive")
+	}
+
+	if duration <= 0 * time.Second {
+		return 0, errors.New("invalid duration: must be positive")
 	}
 
 	calories, err := RunningSpentCalories(steps, weight, height, duration)
