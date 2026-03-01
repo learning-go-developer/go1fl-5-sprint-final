@@ -15,5 +15,5 @@ type Personal struct {
 // It prints the Name, Weight, and Height fields in a formatted way.
 // The weight and height are displayed with two decimal places.
 func (p Personal) Print() {
-	fmt.Printf("Имя: %s\nВес: %.2f\nРост: %.2f\n", p.Name, p.Weight, p.Height)
+	fmt.Printf("Имя: %s\nВес: %.2f кг.\nРост: %.2f м.\n", p.Name, p.Weight, p.Height)
 }
