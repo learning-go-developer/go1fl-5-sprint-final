@@ -2,7 +2,7 @@ package daysteps
 
 import (
 	"time"
-	
+
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
 )
 
@@ -15,8 +15,8 @@ import (
 // - Duration: the total time spent being physically active.
 // - Personal: embedded personal data of the user (e.g., name, age).
 type DaySteps struct {
-	Steps int
-	Duration time.Duration
+	Steps    				int
+	Duration 				time.Duration
 	personaldata.Personal
 }
 
