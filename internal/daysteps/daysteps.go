@@ -52,18 +52,22 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 		return fmt.Errorf("failed to conveert steps: %w", err)
 	}
 
-	if steps == 0 {
+	if steps <= 0 {
 		return errors.New("steps must be greater than 0")
 	}
 
 	ds.Steps = steps
 
-	d, err := time.ParseDuration(parts[1])
+	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
 		return fmt.Errorf("failed to parse duration: %w", err)
 	}
 
-	ds.Duration = d
+	if duration <= 0 {
+		return fmt.Errorf("duration must be positive")
+	}
+
+	ds.Duration = duration
 
 	return nil
 }
