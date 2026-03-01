@@ -94,9 +94,9 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	}
 
 	data := fmt.Sprintf(
-		"Количество шагов: %d\n"+
-			"Дистанция составила: %.2f км\n"+
-			"Вы сожгли: %.2f ккал\n",
+		"Количество шагов: %d.\n"+
+			"Дистанция составила %.2f км.\n"+
+			"Вы сожгли %.2f ккал.\n",
 		ds.Steps,
 		spentenergy.Distance(ds.Steps, ds.Height),
 		calories,
