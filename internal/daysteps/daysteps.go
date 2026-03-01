@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
 // DaySteps represents a record of daily physical activity.
@@ -67,6 +68,39 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	return nil
 }
 
+// ActionInfo generates and returns a formatted string with details
+// about the walking activity.
+//
+// The method uses the DaySteps fields to calculate:
+//   - total number of steps;
+//   - distance covered (based on height);
+//   - calories burned (via WalkingSpentCalories).
+//
+// It returns a string in the following format:
+//
+//	Steps: 792
+//	Distance: 0.51 km
+//	Calories burned: 221.33 kcal
+//
+// If an error occurs during the calculation (e.g., in WalkingSpentCalories),
+// the method returns an empty string along with the error.
 func (ds DaySteps) ActionInfo() (string, error) {
-	// TODO: реализовать функцию
+	var calories float64
+	var err error
+
+	calories, err = spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
+	if err != nil {
+		return "", fmt.Errorf("failed to call WalkingSpentCalories: %w", err)
+	}
+
+	data := fmt.Sprintf(
+		"Количество шагов: %d\n"+
+			"Дистанция составила: %.2f км\n"+
+			"Вы сожгли: %.2f ккал\n",
+		ds.Steps,
+		spentenergy.Distance(ds.Steps, ds.Height),
+		calories,
+	)
+
+	return data, nil
 }
