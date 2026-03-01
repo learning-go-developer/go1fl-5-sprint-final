@@ -8,8 +8,8 @@ package actioninfo
 //   - ActionInfo(): to generate a formatted string with details
 //     about the activity (e.g., steps, distance, calories).
 type DataParser interface {
-	Parse()
-	ActionInfo()
+	Parse()			error
+	ActionInfo()	(string, error)
 }
 
 func Info(dataset []string, dp DataParser) {
