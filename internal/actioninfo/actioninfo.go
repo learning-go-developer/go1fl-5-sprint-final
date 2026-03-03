@@ -31,6 +31,7 @@ func Info(dataset []string, dp DataParser) {
 		err := dp.Parse(v)
 		if err != nil {
 			log.Printf("failed to call Parse: %v", err)
+			continue
 		}
 
 		dp.ActionInfo()
