@@ -30,7 +30,7 @@ func Info(dataset []string, dp DataParser) {
 	for _, v := range dataset {
 		err := dp.Parse(v)
 		if err != nil {
-			log.Printf("failed to call Parse: %v", err)
+			log.Printf("failed to parse dataset item: %v", err)
 			continue
 		}
 
