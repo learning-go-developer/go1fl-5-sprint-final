@@ -20,9 +20,10 @@ type DataParser interface {
 //
 // For each element in the dataset, the function:
 //   - Calls Parse on the DataParser to process the input string;
-//   - Logs an error if parsing fails;
-//   - Calls ActionInfo on the DataParser to generate a workout summary;
-//   - Logs an error if ActionInfo fails.
+//   - Logs an error if parsing fails and skips the item;
+//   - Calls ActionInfo on the DataParser to generate a summary string;
+//   - Logs an error if ActionInfo fails and skips the item;
+//   - Logs the summary string if processing succeeds.
 //
 // The function does not return a value; it relies on logging to report
 // errors and output summaries.
