@@ -84,17 +84,18 @@ func (t Training) ActionInfo() (string, error) {
 	var calories float64
 	var err error
 
-	if t.TrainingType == "Бег" {
+	switch t.TrainingType {
+	case "Бег":
 		calories, err = spentenergy.RunningSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
 		if err != nil {
 			return "", fmt.Errorf("failed to call RunningSpentCalories: %w", err)
 		}
-	} else if t.TrainingType == "Ходьба" {
+	case "Ходьба":
 		calories, err = spentenergy.WalkingSpentCalories(t.Steps, t.Weight, t.Height, t.Duration)
 		if err != nil {
 			return "", fmt.Errorf("failed to call WalkingSpentCalories: %w", err)
 		}
-	} else {
+	default:
 		return "", errors.New("неизвестный тип тренировки")
 	}
 
