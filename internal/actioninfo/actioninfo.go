@@ -1,9 +1,46 @@
 package actioninfo
 
+import (
+	"log"
+)
+
+// DataParser defines the behavior for types that can parse input
+// data and provide a formatted activity summary.
+//
+// Implementations of this interface must provide:
+//   - Parse(): to process and validate input data;
+//   - ActionInfo(): to generate a formatted string with details
+//     about the activity (e.g., steps, distance, calories).
 type DataParser interface {
-	// TODO: добавить методы
+	Parse(input string) error
+	ActionInfo() (string, error)
 }
 
+// Info processes a dataset of input strings using a DataParser.
+//
+// For each element in the dataset, the function:
+//   - Calls Parse on the DataParser to process the input string;
+//   - Logs an error if parsing fails and skips the item;
+//   - Calls ActionInfo on the DataParser to generate a summary string;
+//   - Logs an error if ActionInfo fails and skips the item;
+//   - Logs the summary string if processing succeeds.
+//
+// The function does not return a value; it relies on logging to report
+// errors and output summaries.
 func Info(dataset []string, dp DataParser) {
-	// TODO: реализовать функцию
+	for _, v := range dataset {
+		err := dp.Parse(v)
+		if err != nil {
+			log.Printf("failed to parse dataset item: %v", err)
+			continue
+		}
+
+		info, err := dp.ActionInfo()
+		if err != nil {
+			log.Printf("failed to process dataset item: %v", err)
+			continue
+		}
+
+		log.Printf("activity info: %s", info)
+	}
 }
