@@ -34,9 +34,12 @@ func Info(dataset []string, dp DataParser) {
 			continue
 		}
 
-		dp.ActionInfo()
+		info, err := dp.ActionInfo()
 		if err != nil {
-			log.Printf("failed to call WalkingSpentCalories: %v", err)
+			log.Printf("failed to process dataset item: %v", err)
+			continue
 		}
+
+		log.Printf("activity info: %s", info)
 	}
 }
